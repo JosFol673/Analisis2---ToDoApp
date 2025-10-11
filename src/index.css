@@ -1,0 +1,154 @@
+:root {
+  --bg: #1e1e1e;         
+  --panel: #252526;      
+  --border: #333333;     
+  --text: #F5F5F5;       
+  --muted: #8b949e;      
+  --accent: #FFF896;     
+  --danger: #ff5555;     
+  --ok: #22c55e;         
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Courier New", Courier, monospace;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 760px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+}
+
+.header h1 {
+  font-size: 1.8rem;
+  margin: 0;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.counter {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 16px;
+  border-radius: 0;
+  margin-bottom: 16px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--accent);
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 0;
+  background: #111;
+  color: var(--text);
+  outline: none;
+  font-family: inherit;
+}
+
+input[type="text"]:focus {
+  border-color: var(--accent);
+  background: #000;
+}
+
+input.invalid {
+  border-color: var(--danger);
+}
+
+button {
+  border: 1px solid var(--accent);
+  padding: 10px 14px;
+  border-radius: 0;
+  background: transparent;
+  color: var(--accent);
+  font-weight: bold;
+  cursor: pointer;
+  font-family: inherit;
+  text-transform: uppercase;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+button:hover {
+  background: var(--accent);
+  color: #000;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.error {
+  display: block;
+  margin-top: 6px;
+  color: var(--danger);
+  font-size: 0.9rem;
+}
+
+.empty {
+  color: var(--muted);
+  padding: 12px 2px;
+  text-align: center;
+  font-style: italic;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-item {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 0;
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-weight: 500;
+  color: var(--text);
+  word-break: break-word;
+}
+
+
