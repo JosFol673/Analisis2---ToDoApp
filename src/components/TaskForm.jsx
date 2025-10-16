@@ -22,7 +22,7 @@ export default function TaskForm({ onCreate }) {
         <input
           id="title"
           type="text"
-          placeholder="Escribe la tarea que quieres agregar..."
+          placeholder="Escribe la tarea que quieres agregar…"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           onBlur={() => setTouched(true)}

@@ -6,12 +6,10 @@
   --muted: #8b949e;      
   --accent: #FFF896;     
   --danger: #ff5555;     
-  --ok: #22c55e;         
+  --ok: #22c55e;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -151,4 +149,18 @@ button:disabled {
   word-break: break-word;
 }
 
+/* Botón de eliminar (US2) */
+.btn-danger {
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  background: transparent;
+  padding: 6px 10px;
+  font-family: inherit;
+  text-transform: uppercase;
+  cursor: pointer;
+}
 
+.btn-danger:hover {
+  background: var(--danger);
+  color: #000;
+}

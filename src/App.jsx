@@ -3,11 +3,10 @@ import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
 import "./index.css";
 
-
 const STORAGE_KEY = "todo-react.tasks.v1";
 
 export default function App() {
-  // 1) CARGA antes del primer render (a prueba de StrictMode/HMR)
+  // Cargar tareas antes del primer render (a prueba de StrictMode)
   const [tasks, setTasks] = useState(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -17,14 +16,14 @@ export default function App() {
     }
   });
 
-  // 2) GUARDA cada vez que cambian
+  // Guardar en localStorage cada vez que cambian las tareas
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
     } catch {}
   }, [tasks]);
 
-  // Solo AGREGAR
+  // Crear tarea (US1)
   function handleCreate(title) {
     const newTask = {
       id: Date.now(),
@@ -33,7 +32,12 @@ export default function App() {
       priority: "Media",
       createdAt: new Date().toISOString(),
     };
-    setTasks(prev => [newTask, ...prev]);
+    setTasks((prev) => [newTask, ...prev]);
+  }
+
+  // Eliminar tarea (US2)
+  function handleDelete(id) {
+    setTasks((prev) => prev.filter((t) => t.id !== id));
   }
 
   return (
@@ -44,8 +48,7 @@ export default function App() {
       </header>
 
       <TaskForm onCreate={handleCreate} />
-      <TaskList tasks={tasks} />
+      <TaskList tasks={tasks} onDelete={handleDelete} />
     </div>
   );
 }
-
