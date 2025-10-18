@@ -163,4 +163,64 @@ button:disabled {
 .btn-danger:hover {
   background: var(--danger);
   color: #000;
+  
 }
+/* ---- Prioridades ---- */
+:root {
+  --prio-alta: var(--danger);
+  --prio-media: var(--accent);
+  --prio-baja: var(--ok);
+}
+
+/* Select con el mismo look que tu input */
+.select {
+  border: 1px solid var(--border);
+  background: #111;
+  color: var(--text);
+  padding: 10px 12px;
+  font-family: inherit;
+  text-transform: uppercase;
+}
+
+/* Badges y colores por prioridad (usados en TaskList/TaskItem) */
+.badge {
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: transparent;
+}
+.priority-alta  { border-color: var(--prio-alta);  color: var(--prio-alta); }
+.priority-media { border-color: var(--prio-media); color: var(--prio-media); }
+.priority-baja  { border-color: var(--prio-baja);  color: var(--prio-baja);  }
+
+/* Estado done */
+.item.done .title { text-decoration: line-through; opacity: 0.7; }
+
+/* Layout para TaskList nuevo */
+.item { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.left { display: flex; align-items: center; gap: 8px; }
+.right { display: flex; align-items: center; gap: 8px; }
+
+/* Botones genéricos (TaskList) */
+.btn {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  padding: 6px 10px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.danger { border-color: var(--danger); color: var(--danger); }
+.btn.danger:hover { background: var(--danger); color: #000; }
+.btn.success { border-color: var(--ok); color: var(--ok); }
+.btn.success:hover { background: var(--ok); color: #000; }
+.btn.ghost { border-color: var(--border); color: var(--muted); }
+
+/* Input inline al editar título */
+.input.inline { max-width: 420px; }
+
+

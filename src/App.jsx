@@ -6,7 +6,7 @@ import "./index.css";
 const STORAGE_KEY = "todo-react.tasks.v1";
 
 export default function App() {
-  // Cargar tareas antes del primer render (a prueba de StrictMode)
+  // Carga robusta (permite StrictMode)
   const [tasks, setTasks] = useState(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -16,28 +16,55 @@ export default function App() {
     }
   });
 
-  // Guardar en localStorage cada vez que cambian las tareas
+  // Guardado en LocalStorage
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
     } catch {}
   }, [tasks]);
 
-  // Crear tarea (US1)
-  function handleCreate(title) {
+  // US1: Crear tarea
+  function handleCreate(title, priority = "Media") {
     const newTask = {
       id: Date.now(),
       title: title.trim(),
       done: false,
-      priority: "Media",
+      priority,
       createdAt: new Date().toISOString(),
     };
     setTasks((prev) => [newTask, ...prev]);
   }
 
-  // Eliminar tarea (US2)
+  // US2: Eliminar
   function handleDelete(id) {
     setTasks((prev) => prev.filter((t) => t.id !== id));
+  }
+
+  // US3: Editar
+  function handleUpdate(id, { title, priority }) {
+    setTasks((prev) =>
+      prev.map((t) =>
+        t.id === id
+          ? {
+              ...t,
+              ...(title !== undefined ? { title: title.trim() } : null),
+              ...(priority ? { priority } : null),
+              updatedAt: new Date().toISOString(),
+            }
+          : t
+      )
+    );
+  }
+
+  // US4: Estado (checkbox)
+  function handleToggleDone(id) {
+    setTasks((prev) =>
+      prev.map((t) =>
+        t.id === id
+          ? { ...t, done: !t.done, updatedAt: new Date().toISOString() }
+          : t
+      )
+    );
   }
 
   return (
@@ -48,7 +75,14 @@ export default function App() {
       </header>
 
       <TaskForm onCreate={handleCreate} />
-      <TaskList tasks={tasks} onDelete={handleDelete} />
+      <TaskList
+        tasks={tasks}
+        onDelete={handleDelete}
+        onToggleDone={handleToggleDone}
+        onUpdate={handleUpdate}
+      />
     </div>
   );
 }
+
+
