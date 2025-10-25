@@ -12,11 +12,11 @@ Antes de ejecutar el proyecto, asegúrese de tener instalado:
 
 Puede verificar su versión de Node.js ejecutando en la terminal:
 
-```bash
 node -v
 
 Para ejecutar el proyecto en modo desarrollo se utiliza el comando:
 npm run dev
+Pero antes se debe colocar en la carpeta del proyecto, estando en Analisis2P, cd Proyecto, cd todo-react
 Después de iniciarse el servidor de desarrollo, la terminal mostrará la dirección local del proyecto, generalmente http://localhost:5173
 . Esa dirección debe abrirse en el navegador para visualizar la aplicación.
 
