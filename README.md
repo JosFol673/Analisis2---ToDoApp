@@ -14,6 +14,8 @@ Puede verificar su versión de Node.js ejecutando en la terminal:
 
 node -v
 
+-----bash
+
 Para ejecutar el proyecto en modo desarrollo se utiliza el comando:
 npm run dev
 Pero antes se debe colocar en la carpeta del proyecto, estando en Analisis2P, cd Proyecto, cd todo-react
