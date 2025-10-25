@@ -5,7 +5,7 @@ export default function TaskList({ tasks, onDelete, onToggleDone, onUpdate }) {
     return <p className="empty">Aún no hay tareas. ¡Agrega la primera!</p>;
   }
 
-  // Orden: pendientes primero, luego por fecha
+  
   const ordered = [...tasks].sort((a, b) => {
     if (a.done !== b.done) return a.done ? 1 : -1;
     return new Date(b.createdAt) - new Date(a.createdAt);

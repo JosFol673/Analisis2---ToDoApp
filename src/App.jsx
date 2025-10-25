@@ -6,7 +6,7 @@ import "./index.css";
 const STORAGE_KEY = "todo-react.tasks.v1";
 
 export default function App() {
-  // Carga robusta (permite StrictMode)
+  // 
   const [tasks, setTasks] = useState(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -16,39 +16,47 @@ export default function App() {
     }
   });
 
-  // Guardado en LocalStorage
+  const [filter, setFilter] = useState("todas"); // 
+  const [priorityFilter, setPriorityFilter] = useState("todas"); // 
+  const [searchTerm, setSearchTerm] = useState(""); // 
+
+  // 
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
     } catch {}
   }, [tasks]);
 
-  // US1: Crear tarea
-  function handleCreate(title, priority = "Media") {
+  //
+  function handleCreate(title, priority = "Media", dueDate) {
     const newTask = {
       id: Date.now(),
       title: title.trim(),
       done: false,
       priority,
       createdAt: new Date().toISOString(),
+      dueDate: dueDate ? new Date(dueDate).toISOString() : null,
     };
     setTasks((prev) => [newTask, ...prev]);
   }
 
-  // US2: Eliminar
+  
   function handleDelete(id) {
     setTasks((prev) => prev.filter((t) => t.id !== id));
   }
 
-  // US3: Editar
-  function handleUpdate(id, { title, priority }) {
+  
+  function handleUpdate(id, { title, priority, dueDate }) {
     setTasks((prev) =>
       prev.map((t) =>
         t.id === id
           ? {
               ...t,
-              ...(title !== undefined ? { title: title.trim() } : null),
-              ...(priority ? { priority } : null),
+              ...(title !== undefined ? { title: title.trim() } : {}),
+              ...(priority ? { priority } : {}),
+              ...(dueDate !== undefined
+                ? { dueDate: dueDate ? new Date(dueDate).toISOString() : null }
+                : {}),
               updatedAt: new Date().toISOString(),
             }
           : t
@@ -56,7 +64,7 @@ export default function App() {
     );
   }
 
-  // US4: Estado (checkbox)
+  // Cambiar estado
   function handleToggleDone(id) {
     setTasks((prev) =>
       prev.map((t) =>
@@ -67,6 +75,25 @@ export default function App() {
     );
   }
 
+  // Filtros combinados: estado + prioridad + búsqueda
+  function getFilteredTasks() {
+    return tasks.filter((t) => {
+      const matchesEstado =
+        filter === "todas" ||
+        (filter === "pendientes" && !t.done) ||
+        (filter === "hechas" && t.done);
+
+      const matchesPrioridad =
+        priorityFilter === "todas" || t.priority === priorityFilter;
+
+      const matchesBusqueda = t.title
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+
+      return matchesEstado && matchesPrioridad && matchesBusqueda;
+    });
+  }
+
   return (
     <div className="container">
       <header className="header">
@@ -74,9 +101,44 @@ export default function App() {
         <span className="counter">Total: {tasks.length}</span>
       </header>
 
+      
       <TaskForm onCreate={handleCreate} />
+
+      
+      <div className="filter-bar">
+        <select
+          className="select"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+        >
+          <option value="todas">Todas las tareas</option>
+          <option value="pendientes">Pendientes</option>
+          <option value="hechas">Hechas</option>
+        </select>
+
+        <select
+          className="select"
+          value={priorityFilter}
+          onChange={(e) => setPriorityFilter(e.target.value)}
+        >
+          <option value="todas">Todas las prioridades</option>
+          <option value="Alta">Alta</option>
+          <option value="Media">Media</option>
+          <option value="Baja">Baja</option>
+        </select>
+
+        <input
+          type="text"
+          className="input"
+          placeholder="Buscar tareas..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+
+      
       <TaskList
-        tasks={tasks}
+        tasks={getFilteredTasks()}
         onDelete={handleDelete}
         onToggleDone={handleToggleDone}
         onUpdate={handleUpdate}
@@ -84,5 +146,3 @@ export default function App() {
     </div>
   );
 }
-
-
